@@ -1,0 +1,532 @@
+:root {
+  --neon-primary: hsl(40 100% 50%);
+  --neon-accent: hsl(20 100% 50%);
+  --neon-bg: linear-gradient(45deg, hsl(240 60% 8%), hsl(240 60% 12%));
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--neon-bg);
+  color: white;
+  font-family: 'Chakra Petch', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 54px 0; 
+}
+
+/* 动态网格背景 */
+body::before {
+  content: '';
+  position: fixed;
+  width: 300vw;
+  height: 300vh;
+  background: 
+    repeating-linear-gradient(45deg,
+      transparent 0 15px,
+      hsl(40 100% 50% / 0.03) 15px 30px
+    ),
+    radial-gradient(circle at 50% 50%,
+      hsl(240 100% 20% / 0.3) 0%,
+      transparent 60%
+    );
+  animation: gridMove 40s linear infinite;
+  z-index: -1;
+}
+
+@keyframes gridMove {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 头部状态栏 */
+.auction-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timer {
+  font-size: 1.2rem;
+  color: var(--neon-primary);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* 商品三维展示 */
+.product-container {
+  position: relative;
+  height: 45vh;
+  perspective: 1000px;
+  margin: 20px 0;
+}
+
+.product-image {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 
+    0 0 30px hsl(40 100% 50% / 0.2),
+    0 0 60px hsl(20 100% 50% / 0.15);
+}
+
+.product-image:hover {
+  transform: rotateX(5deg) rotateY(-3deg) scale(1.02);
+}
+
+/* 动态价格显示 */
+.price-display {
+  position: relative;
+  font-size: 3.5rem;
+  text-align: center;
+  margin: 2rem 0;
+  perspective: 1000px;
+}
+
+.price-digits {
+  display: inline-block;
+  background: linear-gradient(45deg, var(--neon-primary), var(--neon-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 
+    0 0 15px hsl(40 100% 50% / 0.5),
+    0 0 30px hsl(20 100% 50% / 0.3);
+  animation: digitGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes digitGlow {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.3); }
+}
+
+/* 赛博风格按钮 */
+.bid-button {
+  /* 新增显示模式修正 */
+  display: block; 
+  /* 调整边距设置 */
+  margin: 2rem auto;
+  /* 保持原有样式 */
+  width: 80%;
+  max-width: 400px;
+  position: relative;
+  padding: 1.5rem;
+  background: linear-gradient(145deg,
+    hsl(40 100% 45% / 0.9),
+    hsl(20 100% 45% / 0.9)
+  );
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), /* 改用弹性曲线 */
+    filter 0.4s ease,
+    box-shadow 0.3s ease;
+  will-change: transform, filter, box-shadow; /* 提示浏览器优化这些属性的变化 */
+  z-index: 1;
+}
+
+
+.bid-button::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  background: linear-gradient(45deg,
+    var(--neon-primary),
+    var(--neon-accent),
+    var(--neon-primary)
+  );
+  z-index: -1;
+  border-radius: 20px;
+  animation: borderFlow 3s linear infinite;
+}
+
+/* .bid-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 150%,
+    hsl(40 100% 70% / 0.3),
+    transparent 60%
+  );
+  mix-blend-mode: overlay;
+} */
+.bid-button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+      transform: skewX(-25deg);
+      animation: buttonGlow 5s infinite alternate;
+	  mix-blend-mode: overlay;
+}
+@keyframes buttonGlow {
+  from { left: -100%; }
+  to { left: 110%; }
+}
+
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.bid-button:active {
+ transform: scale(0.97) translateY(3px); /* 稍微调整压缩比例和位移 */
+  filter: brightness(1.3);
+  box-shadow: 0 0 15px var(--neon-primary); /* 增加按下时的光晕 */
+}
+
+/* 出价记录 */
+/* 出价记录样式更新 */
+.bid-list {
+  width: 90%;
+  margin: 2rem auto;
+  background: hsl(240 60% 12% / 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1rem;
+}
+
+.bid-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+}
+
+.bid-list-header h3 {
+  margin: 0;
+  color: var(--neon-primary);
+  font-size: 1.2rem;
+}
+
+.view-all-bids {
+  background: transparent;
+  border: 1px solid var(--neon-primary);
+  color: var(--neon-primary);
+  font-family: 'Chakra Petch', sans-serif;
+  padding: 0.3rem 0.8rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-all-bids:hover {
+  background: var(--neon-primary);
+  color: hsl(240 60% 8%);
+  box-shadow: 0 0 10px var(--neon-primary);
+}
+
+/* 弹窗样式 */
+.bid-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  overflow: auto;
+  backdrop-filter: blur(5px);
+}
+
+.bid-modal-content {
+  background: var(--neon-bg);
+  margin: 10% auto;
+  width: 90%;
+  overflow: hidden;
+  max-width: 500px;
+  border-radius: 15px;
+  border: 1px solid var(--neon-primary);
+  box-shadow: 
+    0 0 20px hsl(40 100% 50% / 0.2),
+    0 0 40px hsl(20 100% 50% / 0.15);
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bid-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+}
+
+.bid-modal-header h3 {
+  margin: 0;
+  color: var(--neon-primary);
+}
+
+.close-modal {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+  color: var(--neon-primary);
+  transform: scale(1.1);
+}
+
+.bid-modal-body {
+  padding: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.bid-modal-body .bid-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 1;
+  transform: none;
+}
+
+.bid-modal-body .bid-item:last-child {
+  border-bottom: none;
+}
+
+.bid-modal-body .bid-item .bid-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.bid-modal-body .bid-time {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 0.3rem;
+}
+
+.bid-modal-body .bid-amount {
+  color: var(--neon-primary);
+  font-weight: 700;
+}
+
+.no-bids {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 覆盖普通出价记录的动画效果，确保弹窗中的记录立即可见 */
+.bid-modal-body .bid-item.show,
+.bid-modal-body .bid-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 自定义滚动条 */
+.bid-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bid-modal-body::-webkit-scrollbar-track {
+  background: hsl(240 60% 8%);
+}
+
+.bid-modal-body::-webkit-scrollbar-thumb {
+  background: var(--neon-primary);
+  border-radius: 3px;
+}
+
+/* 添加弹窗出现和消失的动画 */
+.modal-show {
+  display: block;
+}
+
+.modal-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-fade-out {
+  animation: fadeOut 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.bid-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 1rem;
+  border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+  transition: transform 0.3s ease;
+}
+
+.bid-amount {
+  color: var(--neon-primary);
+  font-weight: 700;
+}
+
+/* 粒子Canvas */
+.particle-canvas {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+/* 价格变化动画 */
+@keyframes priceChange {
+  0% { transform: scale(1); filter: brightness(1); }
+  30% { transform: scale(1.12); filter: brightness(1.3); } /* 微调高点 */
+  70% { transform: scale(0.95); filter: brightness(1.2); } /* 添加回弹效果 */
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+.price-change {
+    animation: priceChange 0.75s cubic-bezier(0.22, 0.61, 0.36, 1); /* 使用更自然的缓动曲线 */
+    will-change: transform, filter; /* 优化性能 */
+}
+
+/* 新出价记录动画 */
+.bid-item {
+  transform: translateX(-20px);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.bid-item.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.new-bid {
+  background: linear-gradient(90deg, 
+    rgba(255,165,0,0.1) 0%, 
+    rgba(255,165,0,0) 100%);
+}
+
+/* 竞品参数 */
+.product-parameters {
+  display: block;
+  background: hsl(240 60% 12% / 0.6);
+  margin-top: 1rem;
+  padding: 15px;
+}
+.product-parameters h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+}
+.product-parameters ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.product-parameters li {
+  background: hsl(240 60% 12% / 0.6);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  width: 80%;
+  text-align: center;
+}
+.product-parameters li:hover {
+  background: hsl(40 100% 50% / 0.6);
+  color: hsl(240 60% 8%);
+  box-shadow: 0 0 10px var(--neon-primary);
+}   
+
+/* 竞品描述 */
+.product-description {
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 600px;
+  background: hsl(240 60% 12% / 0.6);
+  border-radius: 15px;
+  padding: 1rem;
+}
+.product-description h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  color: var(--neon-primary);
+  border-bottom: 1px solid hsl(0 0% 100% / 0.1);
+}
+.product-description p {
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 价格粒子效果 */
+.price-particle {
+    position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 1;
+  transition: 
+    transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), /* 更自然的运动曲线 */
+    opacity 1.2s cubic-bezier(0.33, 1, 0.68, 1); /* 自然的淡出曲线 */
+  will-change: transform, opacity; /* 优化性能 */
+  box-shadow: 0 0 8px currentColor; /* 为粒子添加光晕效果 */
+  mix-blend-mode: screen; /* 更好的混合效果 */
+}
+
+/* 按钮按下效果 */
+@keyframes buttonPulse {
+  0% { transform: scale(0.97); box-shadow: 0 0 20px var(--neon-primary); }
+  40% { transform: scale(1.03); box-shadow: 0 0 35px var(--neon-primary); } /* 调整高点 */
+  70% { transform: scale(1.01); box-shadow: 0 0 25px var(--neon-primary); } /* 添加回弹效果 */
+  100% { transform: scale(1); box-shadow: 0 0 15px var(--neon-primary); }
+}
+
+
+/* 移动端适配 */
+@media (max-width: 480px) {
+  .price-digits { font-size: 2.8rem; }
+  .bid-button { font-size: 1.3rem; padding: 1.2rem; }
+}
