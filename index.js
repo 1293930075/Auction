@@ -1,3 +1,10 @@
+/*
+ * @Author: liuJ
+ * @Date: 2025-04-02 21:17:21
+ * @LastEditors: liuJ
+ * @LastEditTime: 2025-04-02 22:16:30
+ * @Describe: file describe
+*/
 // 粒子系统
 function initParticles() {
   const canvas = document.querySelector('.particle-canvas');
