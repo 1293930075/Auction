@@ -2,11 +2,12 @@
  * @Author: liuJ
  * @Date: 2025-04-02 21:17:21
  * @LastEditors: liuJ
- * @LastEditTime: 2025-04-02 22:16:30
+ * @LastEditTime: 2025-04-03 10:42:52
  * @Describe: file describe
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -14,62 +15,64 @@
     <link rel="stylesheet" type="text/css" href="./style.css">
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <canvas class="particle-canvas"></canvas>
-    
+
     <header class="auction-header">
-      <div class="timer">剩余时间: 03:25</div>
-      <div>出价人数: <span id="bidCount">28</span></div>
+        <div class="timer">剩余时间: 03:25</div>
+        <div>出价人数: <span id="bidCount">28</span></div>
     </header>
-    
+
     <div class="product-container">
-      <div class="product-image">
-        <img src="https://picsum.photos/600/400" alt="竞拍品" style="width:100%;height:100%;object-fit:cover;">
-      </div>
+        <div class="product-image">
+            <img src="https://picsum.photos/600/400" alt="竞拍品" style="width:100%;height:100%;object-fit:cover;">
+        </div>
     </div>
-    
+
     <div class="price-display">
-      <span class="price-digits">¥1,888,888</span>
+        <span class="price-digits">¥1,888,888</span>
     </div>
-    
+
     <button class="bid-button">
-      立即出价
-      <span class="bid-arrow">➔</span>
+        立即出价
+        <span class="bid-arrow">➔</span>
     </button>
-    
-    
+
+
     <div class="bid-list">
         <div class="bid-list-header">
-          <h3>最新出价</h3>
-          <button class="view-all-bids">查看全部</button>
+            <h3>最新出价</h3>
+            <button class="view-all-bids">查看全部</button>
         </div>
         <div class="bid-list-content">
-          <!-- 这里显示前三条记录，由JavaScript动态填充 -->
+            <!-- 这里显示前三条记录，由JavaScript动态填充 -->
         </div>
-      </div>
-      
-      <!-- 添加记录弹窗 -->
-      <div class="bid-modal" id="bidModal">
+    </div>
+
+    <!-- 添加记录弹窗 -->
+    <div class="bid-modal" id="bidModal">
         <div class="bid-modal-content">
-          <div class="bid-modal-header">
-            <h3>全部出价记录</h3>
-            <button class="close-modal">&times;</button>
-          </div>
-          <div class="bid-modal-body">
-            <!-- 这里显示所有记录，由JavaScript动态填充 -->
-          </div>
+            <div class="bid-modal-header">
+                <h3>全部出价记录</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="bid-modal-body">
+                <!-- 这里显示所有记录，由JavaScript动态填充 -->
+            </div>
         </div>
     </div>
     <!-- 竞品描述 -->
     <div class="product-description">
-      <h3>竞品描述</h3>
-      <p>这是一款非常棒的产品，具有卓越的性能和设计。</p>
-      <img src="https://picsum.photos/600/400" alt="竞拍品" style="width:100%;height:100%;object-fit:cover;">
-      <p>它适合各种场合，无论是工作还是休闲。</p>
-      <p>我们相信它会给你带来极大的满足感。</p>
+        <h3>竞品描述</h3>
+        <p>这是一款非常棒的产品，具有卓越的性能和设计。</p>
+        <img src="https://picsum.photos/600/400" alt="竞拍品" style="width:100%;height:100%;object-fit:cover;">
+        <p>它适合各种场合，无论是工作还是休闲。</p>
+        <p>我们相信它会给你带来极大的满足感。</p>
     </div>
-    
+
     <script src="./index.js"></script>
 </body>
+
 </html>

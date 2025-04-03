@@ -2,7 +2,7 @@
  * @Author: liuJ
  * @Date: 2025-04-02 21:17:21
  * @LastEditors: liuJ
- * @LastEditTime: 2025-04-02 22:52:58
+ * @LastEditTime: 2025-04-03 10:39:58
  * @Describe: file describe
  */
 
@@ -25,6 +25,10 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   padding: 54px 0; 
+}
+
+html, body {
+    touch-action: pan-x pan-y;
 }
 
 /* 动态网格背景 */
